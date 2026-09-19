@@ -1,0 +1,819 @@
+/* ===================================================================
+   UNIVERSE EXPLORER STYLESHEET - Translucent Cockpit & Spaceship HUD
+   Glassmorphism | 3D Radar | Telemetry | Discovery Codex | Shaders
+   =================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap');
+
+:root {
+    --hud-bg: rgba(7, 11, 22, 0.65);
+    --hud-border: rgba(56, 189, 248, 0.3);
+    --hud-border-glow: rgba(56, 189, 248, 0.6);
+    --accent-cyan: #38bdf8;
+    --accent-blue: #2563eb;
+    --accent-gold: #fbbf24;
+    --accent-magenta: #f43f5e;
+    --accent-green: #10b981;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --font-heading: 'Orbitron', sans-serif;
+    --font-body: 'Rajdhani', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* Reset & Global */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: #02040a;
+    color: var(--text-main);
+    font-family: var(--font-body);
+}
+
+/* =========================================================
+   1. CANVAS 3D DO UNIVERSO (THREE.JS)
+   ========================================================= */
+#universe-canvas-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+#universe-canvas-container canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* =========================================================
+   2. COCKPIT HUD CONTAINER TRANSLÚCIDO
+   ========================================================= */
+.cockpit-hud {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 16px 20px;
+}
+
+.cockpit-hud * {
+    pointer-events: auto;
+}
+
+/* Estilo Glassmorphism Base */
+.hud-panel {
+    background: var(--hud-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--hud-border);
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 0 12px rgba(56, 189, 248, 0.05);
+    position: relative;
+}
+
+/* Cantoneiras Futuristas */
+.hud-panel::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: 10px;
+    height: 10px;
+    border-top: 2px solid var(--accent-cyan);
+    border-left: 2px solid var(--accent-cyan);
+}
+
+.hud-panel::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    right: -1px;
+    width: 10px;
+    height: 10px;
+    border-bottom: 2px solid var(--accent-cyan);
+    border-right: 2px solid var(--accent-cyan);
+}
+
+/* =========================================================
+   3. BARRA SUPERIOR: TELEMETRIA, BUSCA E DESCOBERTAS
+   ========================================================= */
+.hud-top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+/* Telemetria da Nave (Canto Superior Esquerdo) */
+.hud-telemetry-box {
+    padding: 14px 18px;
+    min-width: 290px;
+}
+
+.telemetry-title {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: var(--accent-cyan);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.scale-level-badge {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    padding: 2px 8px;
+    border-radius: 3px;
+    background: rgba(56, 189, 248, 0.15);
+    border: 1px solid var(--accent-cyan);
+    color: var(--accent-cyan);
+    display: inline-block;
+    margin-bottom: 8px;
+}
+
+.telemetry-row {
+    font-size: 0.88rem;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+.telemetry-label {
+    color: var(--text-muted);
+}
+
+.telemetry-val {
+    font-family: var(--font-mono);
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* Barra de Busca Universal (Centro Superior) */
+.search-container {
+    position: relative;
+    width: 380px;
+}
+
+.search-input-wrapper {
+    display: flex;
+    align-items: center;
+    background: var(--hud-bg);
+    border: 1px solid var(--hud-border);
+    border-radius: 6px;
+    padding: 8px 14px;
+    backdrop-filter: blur(16px);
+}
+
+.search-icon {
+    color: var(--accent-cyan);
+    margin-right: 10px;
+    font-size: 0.9rem;
+}
+
+#universe-search-input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: #ffffff;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    outline: none;
+}
+
+#universe-search-input::placeholder {
+    color: var(--text-muted);
+}
+
+.search-results-dropdown {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    right: 0;
+    background: rgba(7, 11, 22, 0.94);
+    border: 1px solid var(--hud-border);
+    backdrop-filter: blur(20px);
+    border-radius: 6px;
+    max-height: 280px;
+    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    z-index: 100;
+}
+
+.search-result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.search-result-row:hover {
+    background: rgba(56, 189, 248, 0.15);
+}
+
+.btn-search-travel {
+    background: var(--accent-blue);
+    border: none;
+    color: #ffffff;
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.btn-search-travel:hover {
+    background: var(--accent-cyan);
+    color: #000000;
+}
+
+/* Controles Rápidos (Canto Superior Direito) */
+.hud-quick-controls {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-hud-action {
+    background: var(--hud-bg);
+    border: 1px solid var(--hud-border);
+    color: var(--text-main);
+    font-family: var(--font-heading);
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(16px);
+    transition: all 0.2s ease;
+}
+
+.btn-hud-action:hover {
+    border-color: var(--accent-cyan);
+    color: var(--accent-cyan);
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+}
+
+.btn-hud-action.gold-accent {
+    color: var(--accent-gold);
+    border-color: rgba(251, 191, 36, 0.4);
+}
+
+.btn-hud-action.gold-accent:hover {
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 15px rgba(251, 191, 36, 0.3);
+}
+
+/* =========================================================
+   4. PAINEL LATERAL DIREITO: CELESTIAL OBJECTS
+   ========================================================= */
+.celestial-panel {
+    position: absolute;
+    top: 80px;
+    right: 20px;
+    width: 290px;
+    max-height: 480px;
+    display: flex;
+    flex-direction: column;
+    padding: 14px;
+}
+
+.celestial-panel-header {
+    font-family: var(--font-heading);
+    font-size: 0.88rem;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    color: var(--accent-cyan);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--hud-border);
+}
+
+.celestial-objects-list {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-right: 4px;
+}
+
+.celestial-objects-list::-webkit-scrollbar {
+    width: 4px;
+}
+
+.celestial-objects-list::-webkit-scrollbar-thumb {
+    background: var(--hud-border);
+    border-radius: 4px;
+}
+
+.celestial-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.celestial-item:hover {
+    background: rgba(56, 189, 248, 0.1);
+    border-color: rgba(56, 189, 248, 0.3);
+}
+
+.celestial-item.active {
+    background: rgba(56, 189, 248, 0.2);
+    border-color: var(--accent-cyan);
+}
+
+.celestial-item-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+
+.celestial-item-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.celestial-item-name {
+    font-size: 0.88rem;
+    font-weight: 700;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.celestial-item-type {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+}
+
+.btn-travel-mini {
+    background: transparent;
+    border: 1px solid var(--hud-border);
+    color: var(--accent-cyan);
+    padding: 4px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    transition: all 0.2s;
+}
+
+.btn-travel-mini:hover {
+    background: var(--accent-cyan);
+    color: #000000;
+}
+
+/* =========================================================
+   5. RADAR MINIMAP 3D TÁTICO (CANTO INFERIOR ESQUERDO)
+   ========================================================= */
+.radar-container {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    padding: 12px;
+}
+
+.radar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-heading);
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--accent-cyan);
+    margin-bottom: 6px;
+}
+
+.radar-zoom-controls button {
+    background: transparent;
+    border: 1px solid var(--hud-border);
+    color: var(--accent-cyan);
+    font-family: var(--font-mono);
+    width: 22px;
+    height: 22px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#radar-canvas {
+    display: block;
+    background: radial-gradient(circle, rgba(7, 11, 22, 0.95) 0%, rgba(2, 4, 10, 0.98) 100%);
+    border-radius: 50%;
+    border: 1px solid var(--hud-border-glow);
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
+}
+
+/* =========================================================
+   6. BANNER DE AÇÃO RÁPIDA: ALVO SELECIONADO & VIAJAR
+   ========================================================= */
+.target-quick-action {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 12px 24px;
+}
+
+.target-label {
+    font-family: var(--font-heading);
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.target-name {
+    font-family: var(--font-heading);
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #ffffff;
+    text-shadow: 0 0 10px var(--accent-cyan);
+}
+
+.btn-travel-warp {
+    background: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+    border: none;
+    color: #000000;
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    font-weight: 900;
+    letter-spacing: 2px;
+    padding: 10px 22px;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.btn-travel-warp:hover {
+    transform: scale(1.04);
+    box-shadow: 0 0 30px rgba(56, 189, 248, 0.7);
+}
+
+/* =========================================================
+   7. GAVETA DE DETALHES DO PLANETA (DOSSIÊ)
+   ========================================================= */
+.planet-dossier-drawer {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 380px;
+    height: 100%;
+    background: rgba(7, 11, 22, 0.95);
+    backdrop-filter: blur(24px);
+    border-left: 2px solid var(--accent-cyan);
+    box-shadow: -10px 0 40px rgba(0, 0, 0, 0.8);
+    z-index: 100;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    animation: slideInRight 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+
+.dossier-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--hud-border);
+}
+
+.dossier-name {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--accent-cyan);
+}
+
+.dossier-system {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.btn-close-drawer {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.btn-close-drawer:hover {
+    color: #ffffff;
+}
+
+.dossier-stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.dossier-stat-box {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 8px 10px;
+    border-radius: 4px;
+}
+
+.dossier-stat-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.dossier-stat-value {
+    font-family: var(--font-mono);
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.dossier-section-title {
+    font-family: var(--font-heading);
+    font-size: 0.82rem;
+    color: var(--accent-cyan);
+    margin: 14px 0 6px 0;
+    letter-spacing: 1px;
+}
+
+.dossier-text {
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: #cbd5e1;
+    margin-bottom: 12px;
+}
+
+.dossier-poi-list {
+    list-style: square inside;
+    font-size: 0.88rem;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+}
+
+/* =========================================================
+   8. ALERTA DO BURACO NEGRO & TOASTS
+   ========================================================= */
+.black-hole-alert-banner {
+    position: fixed;
+    top: 75px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(244, 63, 94, 0.25);
+    border: 1px solid var(--accent-magenta);
+    box-shadow: 0 0 25px rgba(244, 63, 94, 0.5);
+    backdrop-filter: blur(16px);
+    color: #ffffff;
+    font-family: var(--font-heading);
+    font-size: 0.88rem;
+    padding: 10px 24px;
+    border-radius: 4px;
+    z-index: 80;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    animation: pulseAlert 1.2s infinite alternate;
+}
+
+@keyframes pulseAlert {
+    0% { opacity: 0.8; }
+    100% { opacity: 1; box-shadow: 0 0 35px rgba(244, 63, 94, 0.8); }
+}
+
+.arrival-toast {
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(16, 185, 129, 0.25);
+    border: 1px solid var(--accent-green);
+    color: #ffffff;
+    font-family: var(--font-heading);
+    font-size: 0.9rem;
+    padding: 10px 20px;
+    border-radius: 4px;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+    z-index: 90;
+}
+
+/* =========================================================
+   9. MODAL "MY DISCOVERIES" & NOVA DESCOBERTA
+   ========================================================= */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(2, 4, 10, 0.85);
+    backdrop-filter: blur(20px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 200;
+}
+
+.modal-card {
+    background: rgba(7, 11, 22, 0.96);
+    border: 1.5px solid var(--accent-cyan);
+    border-radius: 8px;
+    width: 90%;
+    max-width: 720px;
+    padding: 28px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--hud-border);
+    padding-bottom: 12px;
+}
+
+.modal-title {
+    font-family: var(--font-heading);
+    font-size: 1.3rem;
+    color: var(--accent-cyan);
+}
+
+.codex-progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin: 10px 0 20px 0;
+}
+
+.codex-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan));
+    transition: width 0.4s ease;
+}
+
+.codex-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+    max-height: 380px;
+    overflow-y: auto;
+}
+
+.codex-card {
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(255, 255, 255, 0.02);
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.codex-card.found {
+    border-color: var(--accent-cyan);
+    background: rgba(56, 189, 248, 0.08);
+}
+
+.codex-card.found:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(56, 189, 248, 0.2);
+}
+
+.codex-card.locked {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.codex-status {
+    font-size: 0.72rem;
+    color: var(--accent-gold);
+    font-weight: 700;
+}
+
+.codex-name {
+    font-size: 0.92rem;
+    font-weight: 700;
+    margin: 4px 0;
+}
+
+.codex-system {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* =========================================================
+   10. JOYSTICK VIRTUAL MOBILE
+   ========================================================= */
+.virtual-joystick-container {
+    position: fixed;
+    bottom: 24px;
+    left: 24px;
+    width: 100px;
+    height: 100px;
+    z-index: 50;
+    display: none;
+}
+
+.virtual-joystick-base {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: rgba(56, 189, 248, 0.12);
+    border: 2px solid var(--accent-cyan);
+    position: relative;
+    touch-action: none;
+}
+
+.virtual-joystick-stick {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--accent-cyan);
+    position: absolute;
+    top: calc(50% - 22px);
+    left: calc(50% - 22px);
+    box-shadow: 0 0 15px var(--accent-cyan);
+}
+
+/* =========================================================
+   11. RESPONSIVIDADE
+   ========================================================= */
+.hidden {
+    display: none !important;
+}
+
+@media (max-width: 840px) {
+    .celestial-panel {
+        display: none; /* Acesso pela busca ou mapa no celular */
+    }
+
+    .hud-top-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-container {
+        width: 100%;
+    }
+
+    .radar-container {
+        display: none;
+    }
+
+    .virtual-joystick-container {
+        display: block;
+    }
+
+    .planet-dossier-drawer {
+        width: 100%;
+    }
+}
