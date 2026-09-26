@@ -3,224 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UNIVERSE EXPLORER 3D ✨ | Simulador Cósmico Interativo</title>
-    <!-- Fontes Futuristas Sci-Fi -->
+    <meta name="theme-color" content="#f4f6f1">
+    <meta name="description" content="Organize suas tarefas do dia com simplicidade.">
+    <title>Meu Dia | Lista de tarefas</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome 6.5.1 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Estilo Principal do Cockpit -->
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <!-- Bibliotecas 3D & Animação -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+    <script src="script.js" defer></script>
 </head>
 <body>
-    <!-- Canvas WebGL 3D do Universo -->
-    <div id="universe-canvas-container"></div>
-
-    <!-- COCKPIT HUD TRANSLÚCIDO -->
-    <div class="cockpit-hud">
-        <!-- BARRA SUPERIOR -->
-        <header class="hud-top-bar">
-            <!-- Telemetria da Nave (Esquerda) -->
-            <div class="hud-panel hud-telemetry-box">
-                <div class="telemetry-title">
-                    <i class="fa-solid fa-compass-drafting"></i> UNIVERSE EXPLORER
-                </div>
-                <div id="hud-scale-badge" class="scale-level-badge">NÍVEL 1: ÓRBITA PLANETÁRIA</div>
-                <div class="telemetry-row">
-                    <span class="telemetry-label">LOCALIZAÇÃO:</span>
-                    <span class="telemetry-val" id="hud-location-text">Via Láctea // Sistema Solar // Terra</span>
-                </div>
-                <div class="telemetry-row">
-                    <span class="telemetry-label">DISTÂNCIA:</span>
-                    <span class="telemetry-val" id="hud-distance-text">0.00 AU</span>
-                </div>
-                <div class="telemetry-row">
-                    <span class="telemetry-label">VELOCIDADE:</span>
-                    <span class="telemetry-val" id="hud-speed-text">0 km/s [PARADO]</span>
-                </div>
-                <div class="telemetry-row">
-                    <span class="telemetry-label">COORDENADAS:</span>
-                    <span class="telemetry-val" id="hud-coords-text">X: 54.0 | Y: 8.0 | Z: 68.0</span>
-                </div>
-            </div>
-
-            <!-- Campo de Busca Universal (Centro) -->
-            <div class="search-container">
-                <div class="search-input-wrapper">
-                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
-                    <input type="text" id="universe-search-input" placeholder="Pesquisar no universo... (ex: Terra, Marte, Aether, Ignis)" autocomplete="off">
-                </div>
-                <div id="search-results-dropdown" class="search-results-dropdown hidden"></div>
-            </div>
-
-            <!-- Ações Rápidas (Direita) -->
-            <div class="hud-quick-controls">
-                <button type="button" id="btn-open-discoveries" class="btn-hud-action gold-accent" title="Catálogo de Descobertas Cósmicas">
-                    <i class="fa-solid fa-trophy"></i> <span>MY DISCOVERIES</span>
-                </button>
-                <button type="button" id="btn-toggle-sound" class="btn-hud-action" title="Alternar Sons Espaciais">
-                    <i class="fa-solid fa-volume-high"></i>
-                </button>
-            </div>
+    <main class="page-shell">
+        <header class="page-header">
+            <p class="eyebrow"><span class="eyebrow-mark" aria-hidden="true"></span> SEU ESPAÇO, SEU RITMO</p>
+            <h1>Meu Dia<span class="title-period">.</span></h1>
+            <p class="today-date" id="today-date"></p>
+            <p class="subtitle">Um passo de cada vez. O que importa hoje?</p>
         </header>
 
-        <!-- PAINEL LATERAL: OBJETOS CELESTES PRÓXIMOS (DIREITA) -->
-        <aside class="hud-panel celestial-panel">
-            <div class="celestial-panel-header">
-                <i class="fa-solid fa-satellite"></i> <span>CELESTIAL OBJECTS</span>
-            </div>
-            <div id="celestial-objects-list" class="celestial-objects-list scrollable-panel"></div>
-        </aside>
+        <section class="todo-app" aria-label="Lista de tarefas">
+            <form class="task-form" id="task-form">
+                <label class="sr-only" for="task-input">Descreva uma tarefa</label>
+                <input
+                    id="task-input"
+                    name="task"
+                    type="text"
+                    maxlength="160"
+                    placeholder="Ex.: planejar a semana..."
+                    autocomplete="off"
+                >
+                <button class="add-button" type="submit"><span aria-hidden="true">+</span> Adicionar</button>
+            </form>
 
-        <!-- RADAR MINIMAP 3D TÁTICO (INFERIOR ESQUERDO) -->
-        <div id="radar-minimap-container" class="hud-panel radar-container">
-            <div class="radar-header">
-                <span>RADAR TÁTICO 3D</span>
-                <div class="radar-zoom-controls">
-                    <button type="button" id="radar-zoom-in" title="Aproximar Radar">+</button>
-                    <button type="button" id="radar-zoom-out" title="Afastar Radar">-</button>
+            <div class="list-toolbar">
+                <div class="list-heading">
+                    <h2>Suas tarefas</h2>
+                    <span class="task-count" id="task-count">0</span>
                 </div>
+                <nav class="filters" aria-label="Filtrar tarefas">
+                    <button class="filter-button is-active" type="button" data-filter="all" aria-pressed="true">Todas</button>
+                    <button class="filter-button" type="button" data-filter="pending" aria-pressed="false">A fazer</button>
+                    <button class="filter-button" type="button" data-filter="completed" aria-pressed="false">Feitas</button>
+                </nav>
             </div>
-            <canvas id="radar-canvas"></canvas>
-        </div>
 
-        <!-- BANNER DE AÇÃO: ALVO SELECIONADO & VIAJAR (INFERIOR CENTRO) -->
-        <div id="target-quick-action" class="hud-panel target-quick-action hidden">
-            <div>
-                <span class="target-label">ALVO SELECIONADO:</span>
-                <div class="target-name" id="target-quick-name">Terra</div>
-            </div>
-            <button type="button" id="btn-travel-target" class="btn-travel-warp">
-                <i class="fa-solid fa-bolt-lightning"></i> <span>VIAJAR (WARP JUMP)</span>
-            </button>
-        </div>
-    </div>
+            <ul class="task-list" id="task-list" aria-label="Tarefas"></ul>
 
-    <!-- GAVETA DE DETALHES DO PLANETA (DOSSIÊ CÓSMICO) -->
-    <div id="planet-dossier-drawer" class="planet-dossier-drawer hidden">
-        <div class="dossier-header">
-            <div>
-                <div class="dossier-name" id="dossier-name">Terra</div>
-                <div class="dossier-system" id="dossier-system">Sistema Solar &bull; Planeta Telúrico</div>
+            <div class="empty-state" id="empty-state">
+                <span class="empty-icon" aria-hidden="true">✳</span>
+                <p class="empty-title">Tudo começa com uma ideia.</p>
+                <p class="empty-copy">Adicione uma tarefa e tire os planos da cabeça.</p>
             </div>
-            <button type="button" id="btn-dossier-close" class="btn-close-drawer">&times;</button>
-        </div>
 
-        <div class="dossier-stats-grid">
-            <div class="dossier-stat-box">
-                <div class="dossier-stat-label">Tipo Planetário</div>
-                <div class="dossier-stat-value" id="dossier-type">Telúrico</div>
-            </div>
-            <div class="dossier-stat-box">
-                <div class="dossier-stat-label">Gravidade Superficial</div>
-                <div class="dossier-stat-value" id="dossier-gravity">9.8 m/s²</div>
-            </div>
-            <div class="dossier-stat-box">
-                <div class="dossier-stat-label">Temperatura Média</div>
-                <div class="dossier-stat-value" id="dossier-temp">15°C</div>
-            </div>
-            <div class="dossier-stat-box">
-                <div class="dossier-stat-label">Composição Atmosférica</div>
-                <div class="dossier-stat-value" id="dossier-atmos">N2, O2</div>
-            </div>
-        </div>
+            <footer class="list-footer">
+                <p class="progress-copy" id="progress-copy" aria-live="polite">Seu dia está só começando.</p>
+                <button class="clear-button" id="clear-completed" type="button" hidden>Limpar concluídas</button>
+            </footer>
+        </section>
 
-        <div class="dossier-section-title">DESCRIÇÃO ASTROFÍSICA</div>
-        <p class="dossier-text" id="dossier-desc"></p>
-
-        <div class="dossier-section-title">CURIOSIDADE CÓSMICA</div>
-        <p class="dossier-text" id="dossier-curiosity" style="color: var(--accent-gold); font-style: italic;"></p>
-
-        <div class="dossier-section-title">PONTOS DE INTERESSE NOTÁVEIS</div>
-        <ul class="dossier-poi-list" id="dossier-poi-list"></ul>
-
-        <button type="button" id="btn-dossier-travel" class="btn-travel-warp" style="width: 100%; justify-content: center; margin-top: auto;">
-            <i class="fa-solid fa-plane-up"></i> INICIAR VIAGEM PARA O PLANETA
-        </button>
-    </div>
-
-    <!-- OVERLAY DE VIAGEM HIPERESPACIAL (WARP JUMP OVERLAY) -->
-    <div id="warp-travel-overlay" class="modal-overlay hidden" style="background: rgba(2, 4, 10, 0.45); pointer-events: none;">
-        <div style="text-align: center;">
-            <div style="font-family: var(--font-heading); font-size: 1.1rem; letter-spacing: 4px; color: var(--accent-cyan);">
-                PROPULSÃO DE DOBRA ATIVADA
-            </div>
-            <div style="font-family: var(--font-heading); font-size: 2.8rem; font-weight: 900; color: #ffffff; text-shadow: 0 0 30px var(--accent-cyan); margin: 12px 0;" id="warp-dest-name">
-                DESTINO
-            </div>
-            <div style="font-family: var(--font-mono); font-size: 0.95rem; color: var(--text-muted);">
-                DESLOCAMENTO RELATIVÍSTICO DE LINHA DE VISÃO // FOV ADAPTATIVO
-            </div>
-        </div>
-    </div>
-
-    <!-- TOAST DE CHEGADA EM ÓRBITA -->
-    <div id="arrival-toast" class="arrival-toast hidden">
-        <i class="fa-solid fa-circle-check"></i> <span id="arrival-toast-text">ÓRBITA ESTABELECIDA</span>
-    </div>
-
-    <!-- ALERTA DE PROXIMIDADE DO BURACO NEGRO -->
-    <div id="black-hole-alert-banner" class="black-hole-alert-banner hidden">
-        <i class="fa-solid fa-triangle-exclamation"></i>
-        <span>ALERTA GRAVITACIONAL: HORIZONTE DE EVENTOS DETECTADO // VORTEX-X (DESVIO RECOMENDADO)</span>
-    </div>
-
-    <!-- MODAL "MY DISCOVERIES" (CATÁLOGO DE MUNDOS) -->
-    <div id="discoveries-modal" class="modal-overlay hidden">
-        <div class="modal-card">
-            <div class="modal-header">
-                <div class="modal-title"><i class="fa-solid fa-trophy"></i> MY DISCOVERIES // CATÁLOGO CÓSMICO</div>
-                <button type="button" id="btn-close-discoveries" class="btn-close-drawer">&times;</button>
-            </div>
-            <div style="display: flex; justify-content: space-between; font-size: 0.85rem; color: var(--text-muted);">
-                <span>Progresso da Exploração Cósmica</span>
-                <span id="codex-progress-count">1/19 (5%)</span>
-            </div>
-            <div class="codex-progress-bar">
-                <div id="codex-progress-fill" class="codex-progress-fill"></div>
-            </div>
-            <div id="codex-grid" class="codex-grid"></div>
-        </div>
-    </div>
-
-    <!-- MODAL "NEW WORLD DISCOVERED" -->
-    <div id="new-discovery-modal" class="modal-overlay hidden">
-        <div class="modal-card" style="max-width: 480px; text-align: center;">
-            <div style="font-size: 3rem; margin-bottom: 8px;">🌌</div>
-            <div style="font-family: var(--font-heading); font-size: 1.4rem; font-weight: 900; color: var(--accent-gold); margin-bottom: 6px;">
-                NEW WORLD DISCOVERED!
-            </div>
-            <p style="color: var(--text-muted); font-size: 0.95rem;">
-                Você estabeleceu órbita pioneira e catalogou com sucesso o corpo celeste:
-            </p>
-            <div id="new-discovery-name" style="font-family: var(--font-heading); font-size: 1.6rem; color: #ffffff; margin: 16px 0;">
-                Nome do Planeta
-            </div>
-            <button type="button" id="btn-close-new-discovery" class="btn-travel-warp" style="width: 100%; justify-content: center;">
-                REGISTRAR NO MEU CATÁLOGO
-            </button>
-        </div>
-    </div>
-
-    <!-- JOYSTICK VIRTUAL PARA DISPOSITIVOS MÓVEIS -->
-    <div class="virtual-joystick-container">
-        <div class="virtual-joystick-base" id="virtual-joystick-base">
-            <div class="virtual-joystick-stick" id="virtual-joystick-stick"></div>
-        </div>
-    </div>
-
-    <!-- Módulos de Script do Universe Explorer -->
-    <script src="js/universe-data.js"></script>
-    <script src="js/universe-audio.js"></script>
-    <script src="js/universe-engine.js"></script>
-    <script src="js/flight-controller.js"></script>
-    <script src="js/radar-minimap.js"></script>
-    <script src="js/universe-ui.js"></script>
-    <script src="js/main.js"></script>
+        <p class="privacy-note"><span aria-hidden="true">↳</span> Suas tarefas ficam salvas neste dispositivo.</p>
+    </main>
 </body>
 </html>
