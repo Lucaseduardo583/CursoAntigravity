@@ -1,0 +1,125 @@
+.card-produtos {
+  padding: 1.75rem;
+}
+
+.cabecalho-lista {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.cabecalho-lista h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.busca-box input {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  color: var(--text-main);
+  padding: 0.6rem 0.9rem;
+  font-size: 0.85rem;
+  outline: none;
+  min-width: 240px;
+  transition: border-color 0.2s;
+}
+
+.busca-box input:focus {
+  border-color: var(--primary-light);
+}
+
+.tabela-container {
+  overflow-x: auto;
+}
+
+.tabela-estoque {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.tabela-estoque th {
+  padding: 0.85rem 1rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.tabela-estoque td {
+  padding: 0.95rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.tabela-estoque tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.nome-produto {
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.sku-tag {
+  background: rgba(148, 163, 184, 0.12);
+  color: #cbd5e1;
+  padding: 0.2rem 0.45rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-family: var(--font-mono);
+}
+
+.saldo-destaque {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: #38bdf8;
+  font-size: 0.95rem;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 0.25rem 0.65rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.status-ok {
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.status-baixo {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.status-zerado {
+  background: rgba(244, 63, 94, 0.15);
+  color: #fb7185;
+  border: 1px solid rgba(244, 63, 94, 0.3);
+}
+
+.texto-centro {
+  text-align: center;
+}
+
+.texto-direita {
+  text-align: right;
+}
+
+.carregando-alerta {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-muted);
+}

@@ -1,0 +1,51 @@
+.card-historico {
+  padding: 1.75rem;
+}
+
+.tabela-historico {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.88rem;
+}
+
+.tabela-historico th {
+  padding: 0.85rem 1rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.tabela-historico td {
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+}
+
+.data-col {
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+}
+
+.produto-col {
+  font-weight: 600;
+  color: #f1f5f9;
+}
+
+.qtd-historico {
+  font-family: var(--font-mono);
+  color: #38bdf8;
+}
+
+.operador-col {
+  color: var(--text-muted);
+}
+
+.texto-vazio {
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-dim);
+}

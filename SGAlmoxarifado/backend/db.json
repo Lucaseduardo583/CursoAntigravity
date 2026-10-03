@@ -1,0 +1,341 @@
+{
+  "usuarios": [
+    {
+      "id": "1",
+      "nome": "Carlos Silva",
+      "cargo": "Admin",
+      "email": "carlos@almoxarifado.com"
+    },
+    {
+      "id": "2",
+      "nome": "Mariana Souza",
+      "cargo": "Operador",
+      "email": "mariana@almoxarifado.com"
+    },
+    {
+      "id": "3",
+      "nome": "Lucas Eduardo",
+      "cargo": "Especialista 3D",
+      "email": "lucas.3d@almoxarifado.com"
+    }
+  ],
+  "produtos": [
+    {
+      "id": "1",
+      "nome": "Parafuso Sextavado M8",
+      "sku": "PAR-M8-001",
+      "quantidade_estoque": 151
+    },
+    {
+      "id": "2",
+      "nome": "Chave de Fenda Cruzada",
+      "sku": "FER-CFD-002",
+      "quantidade_estoque": 62
+    },
+    {
+      "id": "3",
+      "nome": "Fita Isolante 20m",
+      "sku": "ELE-FIT-003",
+      "quantidade_estoque": 10
+    },
+    {
+      "id": "4",
+      "nome": "Martelo de Borracha",
+      "sku": "FER-MAR-004",
+      "quantidade_estoque": 12
+    },
+    {
+      "id": "5",
+      "nome": "Filamento PLA Premium Preto 1kg",
+      "sku": "FIL-PLA-PRT-05",
+      "quantidade_estoque": 18
+    },
+    {
+      "id": "6",
+      "nome": "Filamento PLA Silk Dourado 1kg",
+      "sku": "FIL-PLA-DOR-06",
+      "quantidade_estoque": 8
+    },
+    {
+      "id": "7",
+      "nome": "Filamento PETG Cristal Translúcido 1kg",
+      "sku": "FIL-PET-TRS-07",
+      "quantidade_estoque": 14
+    },
+    {
+      "id": "8",
+      "nome": "Filamento TPU 95A Flex Vermelho 500g",
+      "sku": "FIL-TPU-VRM-08",
+      "quantidade_estoque": 5
+    },
+    {
+      "id": "9",
+      "nome": "Filamento ABS Pro Cinza Titânio 1kg",
+      "sku": "FIL-ABS-CZ-09",
+      "quantidade_estoque": 10
+    },
+    {
+      "id": "10",
+      "nome": "Filamento PLA Fosco Verde Militar 1kg",
+      "sku": "FIL-PLA-VRD-10",
+      "quantidade_estoque": 7
+    }
+  ],
+  "movimentacoes": [
+    {
+      "id": "1",
+      "produto_id": "1",
+      "usuario_id": "1",
+      "tipo": "entrada",
+      "quantidade_movimentada": 50,
+      "data": "2026-09-01T10:00:00.000Z"
+    },
+    {
+      "produto_id": "2",
+      "usuario_id": "2",
+      "tipo": "saida",
+      "quantidade_movimentada": 5,
+      "data": "2026-10-03T17:54:32.381Z",
+      "id": "YwVgnEh_Mvc"
+    },
+    {
+      "produto_id": "2",
+      "usuario_id": "2",
+      "tipo": "entrada",
+      "quantidade_movimentada": 1,
+      "data": "2026-10-03T17:54:44.502Z",
+      "id": "SW8uQKKke1Q"
+    },
+    {
+      "produto_id": "2",
+      "usuario_id": "2",
+      "tipo": "entrada",
+      "quantidade_movimentada": 21,
+      "data": "2026-10-03T17:57:36.037Z",
+      "id": "kv9HTi4RsjQ"
+    },
+    {
+      "produto_id": "2",
+      "usuario_id": "2",
+      "tipo": "entrada",
+      "quantidade_movimentada": 1,
+      "data": "2026-10-03T17:57:37.757Z",
+      "id": "LH2ov8HjqVs"
+    },
+    {
+      "produto_id": "2",
+      "usuario_id": "2",
+      "tipo": "entrada",
+      "quantidade_movimentada": 1,
+      "data": "2026-10-03T17:57:37.996Z",
+      "id": "v_NSo8zVv6Q"
+    },
+    {
+      "produto_id": "2",
+      "usuario_id": "2",
+      "tipo": "entrada",
+      "quantidade_movimentada": 1,
+      "data": "2026-10-03T17:57:38.148Z",
+      "id": "3_ssv8CH68s"
+    },
+    {
+      "produto_id": "2",
+      "usuario_id": "2",
+      "tipo": "entrada",
+      "quantidade_movimentada": 1,
+      "data": "2026-10-03T17:57:39.725Z",
+      "id": "jN7RnOngQsw"
+    },
+    {
+      "produto_id": "2",
+      "usuario_id": "2",
+      "tipo": "entrada",
+      "quantidade_movimentada": 1,
+      "data": "2026-10-03T17:57:39.885Z",
+      "id": "KN616KJ2X0w"
+    },
+    {
+      "produto_id": "2",
+      "usuario_id": "2",
+      "tipo": "entrada",
+      "quantidade_movimentada": 1,
+      "data": "2026-10-03T17:57:40.060Z",
+      "id": "J91OuYiNYYM"
+    },
+    {
+      "produto_id": "2",
+      "usuario_id": "2",
+      "tipo": "entrada",
+      "quantidade_movimentada": 1,
+      "data": "2026-10-03T17:57:40.365Z",
+      "id": "G4LfrC62O5k"
+    },
+    {
+      "produto_id": "2",
+      "usuario_id": "2",
+      "tipo": "entrada",
+      "quantidade_movimentada": 1,
+      "data": "2026-10-03T17:57:40.509Z",
+      "id": "RneeDzyfVow"
+    },
+    {
+      "produto_id": "2",
+      "usuario_id": "2",
+      "tipo": "entrada",
+      "quantidade_movimentada": 1,
+      "data": "2026-10-03T17:57:40.668Z",
+      "id": "OhQzjy6Saw8"
+    },
+    {
+      "produto_id": "2",
+      "usuario_id": "2",
+      "tipo": "entrada",
+      "quantidade_movimentada": 1,
+      "data": "2026-10-03T17:57:40.829Z",
+      "id": "Zzt1IGawFcQ"
+    },
+    {
+      "produto_id": "2",
+      "usuario_id": "2",
+      "tipo": "entrada",
+      "quantidade_movimentada": 1,
+      "data": "2026-10-03T17:57:40.997Z",
+      "id": "UupPbY40bkA"
+    },
+    {
+      "produto_id": "2",
+      "usuario_id": "2",
+      "tipo": "entrada",
+      "quantidade_movimentada": 1,
+      "data": "2026-10-03T17:57:41.172Z",
+      "id": "t2Ln3EUuSXU"
+    },
+    {
+      "produto_id": "2",
+      "usuario_id": "2",
+      "tipo": "entrada",
+      "quantidade_movimentada": 1,
+      "data": "2026-10-03T17:57:41.308Z",
+      "id": "41_a0i7gFus"
+    },
+    {
+      "produto_id": "2",
+      "usuario_id": "2",
+      "tipo": "entrada",
+      "quantidade_movimentada": 1,
+      "data": "2026-10-03T17:57:41.477Z",
+      "id": "WcRX_n5LdI0"
+    },
+    {
+      "produto_id": "2",
+      "usuario_id": "2",
+      "tipo": "entrada",
+      "quantidade_movimentada": 1,
+      "data": "2026-10-03T17:57:41.645Z",
+      "id": "jq6Jeerhl6Y"
+    },
+    {
+      "produto_id": "2",
+      "usuario_id": "2",
+      "tipo": "entrada",
+      "quantidade_movimentada": 1,
+      "data": "2026-10-03T17:57:41.821Z",
+      "id": "euoK2GGHYAA"
+    },
+    {
+      "produto_id": "2",
+      "usuario_id": "2",
+      "tipo": "entrada",
+      "quantidade_movimentada": 1,
+      "data": "2026-10-03T17:57:41.988Z",
+      "id": "Igsp8e9ZS34"
+    },
+    {
+      "produto_id": "2",
+      "usuario_id": "2",
+      "tipo": "entrada",
+      "quantidade_movimentada": 1,
+      "data": "2026-10-03T17:57:42.164Z",
+      "id": "48uxROW8BGg"
+    },
+    {
+      "produto_id": "2",
+      "usuario_id": "2",
+      "tipo": "entrada",
+      "quantidade_movimentada": 1,
+      "data": "2026-10-03T17:57:42.308Z",
+      "id": "FX4ewHlyxhY"
+    },
+    {
+      "produto_id": "2",
+      "usuario_id": "2",
+      "tipo": "entrada",
+      "quantidade_movimentada": 1,
+      "data": "2026-10-03T17:57:42.436Z",
+      "id": "qIq4Z8bBx4M"
+    },
+    {
+      "produto_id": "1",
+      "usuario_id": "1",
+      "tipo": "entrada",
+      "quantidade_movimentada": 1,
+      "data": "2026-10-03T18:04:48.019Z",
+      "id": "s_dkte3cMas"
+    }
+  ],
+  "maquinas": [
+    {
+      "id": "1",
+      "nome": "Bambu Lab X1-Carbon #01",
+      "tipo_tecnologia": "FDM CoreXY",
+      "status": "imprimindo",
+      "filamento_id": "5",
+      "operador_id": "3",
+      "projeto": "Gabinete Eletrônico V3",
+      "progresso": 74,
+      "temperatura_bico": 220,
+      "temperatura_mesa": 60,
+      "tempo_restante": "01h 24m"
+    },
+    {
+      "id": "2",
+      "nome": "Creality K1 Max #02",
+      "tipo_tecnologia": "High-Speed FDM",
+      "status": "disponivel",
+      "filamento_id": "7",
+      "operador_id": null,
+      "projeto": "Pronta para Impressão",
+      "progresso": 0,
+      "temperatura_bico": 0,
+      "temperatura_mesa": 0,
+      "tempo_restante": "Ociosa"
+    },
+    {
+      "id": "3",
+      "nome": "Ender 3 S1 Pro #03",
+      "tipo_tecnologia": "FDM Direct Drive",
+      "status": "imprimindo",
+      "filamento_id": "8",
+      "operador_id": "2",
+      "projeto": "Gaxeta Flexível TPU",
+      "progresso": 42,
+      "temperatura_bico": 230,
+      "temperatura_mesa": 50,
+      "tempo_restante": "02h 10m"
+    },
+    {
+      "id": "4",
+      "nome": "Anycubic Photon Mono X #04",
+      "tipo_tecnologia": "SLA Resina UV",
+      "status": "disponivel",
+      "filamento_id": null,
+      "operador_id": "1",
+      "projeto": "Pronta para Impressão",
+      "progresso": 0,
+      "temperatura_bico": 0,
+      "temperatura_mesa": 0,
+      "tempo_restante": "Ociosa"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

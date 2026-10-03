@@ -1,0 +1,36 @@
+.app-container {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 1.5rem 2rem;
+}
+
+.layout-grid {
+  display: grid;
+  grid-template-columns: 420px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.painel-lateral {
+  position: sticky;
+  top: 1.5rem;
+}
+
+.painel-conteudo {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.painel-lab {
+  width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .layout-grid {
+    grid-template-columns: 1fr;
+  }
+  .painel-lateral {
+    position: static;
+  }
+}
