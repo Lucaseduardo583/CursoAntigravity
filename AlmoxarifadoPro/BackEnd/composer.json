@@ -1,0 +1,14 @@
+{
+  "name": "metalurgica/almoxarifadopro",
+  "description": "API REST do AlmoxarifadoPro - Metalúrgica Vale do Aço S/A",
+  "type": "project",
+  "license": "proprietary",
+  "require": {
+    "php": ">=8.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Metalurgica\\AlmoxarifadoPro\\": "src/"
+    }
+  }
+}
