@@ -5,6 +5,7 @@
  */
 
 import { useState, useCallback } from 'react';
+import type { FormEvent } from 'react';
 import { Shift, FormErrors, WithdrawalResponse, ItemBalance } from '../types/inventory';
 import { submitWithdrawal } from '../services/api';
 
@@ -60,7 +61,7 @@ export function useWithdrawalForm(
     return !Object.values(errs).some(Boolean);
   }, [itemCode, quantity, technicianBadge, shift, currentItem]);
 
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: FormEvent) => {
     e.preventDefault();
     if (!validateAll()) return;
     setIsSubmitting(true);

@@ -1,30 +1,19 @@
 /**
  * Suposições adotadas:
- * - A tela centraliza o fluxo de retirada e atualização de estoque do almoxarife.
- * - Ao confirmar a retirada com sucesso, o saldo do item é reconsultado imediatamente.
+ * - A página principal combina o cabeçalho executivo, atalhos de itens frequentes, alertas e histórico.
+ * - Ao selecionar um item de alta rotatividade, preenche o código e consulta o saldo no PostgreSQL.
  */
 
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import { useItemLookup } from '../hooks/useItemLookup';
 import { useWithdrawalForm } from '../hooks/useWithdrawalForm';
+import { Header } from '../components/Header/Header';
 import { AlertBanner } from '../components/AlertBanner/AlertBanner';
 import { ItemStockCard } from '../components/ItemStockCard/ItemStockCard';
 import { WithdrawalForm } from '../components/WithdrawalForm/WithdrawalForm';
 import { RecentWithdrawals } from '../components/RecentWithdrawals/RecentWithdrawals';
-
-function Header() {
-  return (
-    <header className="mb-6 border-b border-slate-200 pb-4">
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
-        <div>
-          <span className="text-xs font-bold uppercase tracking-wider text-blue-700">Metalúrgica Vale do Aço S/A</span>
-          <h1 className="text-2xl font-black text-slate-900">Almoxarifado Central — Registro de Retirada</h1>
-        </div>
-        <div className="text-xs text-slate-500 font-medium">Terminal Interno de Operação</div>
-      </div>
-    </header>
-  );
-}
+import { ItemQuickSelector } from '../components/ItemQuickSelector/ItemQuickSelector';
+import { RuptureAlerts } from '../components/RuptureAlerts/RuptureAlerts';
 
 export function WithdrawalPage() {
   const { item, isLoading, lookupError, lookup, clear } = useItemLookup();
@@ -33,36 +22,48 @@ export function WithdrawalPage() {
   const handleBlur = useCallback(() => lookup(form.itemCode), [lookup, form.itemCode]);
   const handleReset = useCallback(() => { form.resetForm(); clear(); }, [form, clear]);
 
+  const handleSelectQuick = useCallback((code: string) => {
+    form.setItemCode(code);
+    lookup(code);
+  }, [form, lookup]);
+
   return (
-    <main className="max-w-5xl mx-auto px-4 py-8 text-slate-800">
+    <div className="min-h-screen bg-slate-950 pb-16">
       <Header />
-      <AlertBanner type="error" message={lookupError || form.submitError || ''} />
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-        <section aria-labelledby="form-heading" className="lg:col-span-7 bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
-          <h2 id="form-heading" className="text-base font-bold text-slate-900 mb-4 pb-2 border-b border-slate-100">
-            Dados da Movimentação
-          </h2>
-          <WithdrawalForm
-            itemCode={form.itemCode}
-            onItemCodeChange={form.setItemCode}
-            onItemBlur={handleBlur}
-            quantity={form.quantity}
-            onQuantityChange={form.setQuantity}
-            technicianBadge={form.technicianBadge}
-            onTechnicianBadgeChange={form.setTechnicianBadge}
-            shift={form.shift}
-            onShiftChange={form.setShift}
-            errors={form.errors}
-            isSubmitting={form.isSubmitting}
-            onSubmit={form.handleSubmit}
-            onReset={handleReset}
-          />
-        </section>
-        <aside aria-label="Informações de saldo e histórico" className="lg:col-span-5 space-y-6">
-          <ItemStockCard item={item} isLoading={isLoading} />
-          <RecentWithdrawals movements={form.recentMovements} />
-        </aside>
-      </div>
-    </main>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6">
+        <RuptureAlerts onSelectItem={handleSelectQuick} />
+        <AlertBanner type="error" message={lookupError || form.submitError || ''} />
+
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          <section aria-labelledby="form-heading" className="lg:col-span-7 bg-slate-900/90 p-6 sm:p-7 rounded-3xl border border-slate-800 shadow-2xl backdrop-blur-md">
+            <h2 id="form-heading" className="text-base font-bold text-white mb-4 pb-3 border-b border-slate-800/80 flex items-center justify-between">
+              <span>Registrar Retirada de Material</span>
+              <span className="text-xs font-mono font-medium text-slate-400">Terminal Almoxarife</span>
+            </h2>
+            <ItemQuickSelector selectedCode={form.itemCode} onSelect={handleSelectQuick} />
+            <WithdrawalForm
+              itemCode={form.itemCode}
+              onItemCodeChange={form.setItemCode}
+              onItemBlur={handleBlur}
+              quantity={form.quantity}
+              onQuantityChange={form.setQuantity}
+              technicianBadge={form.technicianBadge}
+              onTechnicianBadgeChange={form.setTechnicianBadge}
+              shift={form.shift}
+              onShiftChange={form.setShift}
+              errors={form.errors}
+              isSubmitting={form.isSubmitting}
+              onSubmit={form.handleSubmit}
+              onReset={handleReset}
+            />
+          </section>
+
+          <aside aria-label="Painel de inventário e histórico" className="lg:col-span-5 space-y-6">
+            <ItemStockCard item={item} isLoading={isLoading} />
+            <RecentWithdrawals movements={form.recentMovements} />
+          </aside>
+        </div>
+      </main>
+    </div>
   );
 }

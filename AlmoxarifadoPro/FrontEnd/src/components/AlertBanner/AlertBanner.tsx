@@ -1,10 +1,8 @@
 /**
  * Suposições adotadas:
- * - O componente suporta as variantes 'error', 'warning' e 'success' com contraste AAA/AA.
- * - Utiliza atributos ARIA nativos para leitores de tela anunciarem mudanças de estado.
+ * - O alerta possui variantes de erro, aviso e sucesso estilizados para tema industrial de alto contraste.
+ * - Utiliza atributos ARIA para leitura acessível imediata de mensagens.
  */
-
-import React from 'react';
 
 interface AlertBannerProps {
   type: 'error' | 'warning' | 'success';
@@ -13,9 +11,15 @@ interface AlertBannerProps {
 }
 
 const STYLES = {
-  error: 'bg-red-50 border-red-700 text-red-950',
-  warning: 'bg-amber-50 border-amber-700 text-amber-950',
-  success: 'bg-emerald-50 border-emerald-700 text-emerald-950',
+  error: 'bg-rose-950/40 border-rose-500/50 text-rose-200',
+  warning: 'bg-amber-950/40 border-amber-500/50 text-amber-200',
+  success: 'bg-emerald-950/40 border-emerald-500/50 text-emerald-200',
+};
+
+const ICONS = {
+  error: '⛔',
+  warning: '⚠',
+  success: '✓',
 };
 
 export function AlertBanner({ type, message, onDismiss }: AlertBannerProps) {
@@ -25,22 +29,18 @@ export function AlertBanner({ type, message, onDismiss }: AlertBannerProps) {
     <div
       role="alert"
       aria-live="polite"
-      className={`flex items-start justify-between p-4 border-l-4 rounded-r-md shadow-sm mb-4 ${STYLES[type]}`}
+      className={`flex items-start justify-between p-4 rounded-xl border shadow-lg mb-6 backdrop-blur-md ${STYLES[type]}`}
     >
       <div className="flex items-center gap-3">
-        <span className="font-bold text-lg select-none" aria-hidden="true">
-          {type === 'error' && '✕'}
-          {type === 'warning' && '⚠'}
-          {type === 'success' && '✓'}
-        </span>
+        <span className="text-lg select-none" aria-hidden="true">{ICONS[type]}</span>
         <p className="text-sm font-medium leading-relaxed">{message}</p>
       </div>
       {onDismiss && (
         <button
           type="button"
           onClick={onDismiss}
-          aria-label="Fechar mensagem de alerta"
-          className="ml-4 text-sm font-semibold underline hover:opacity-80 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-current"
+          aria-label="Fechar mensagem"
+          className="ml-4 text-xs font-bold uppercase tracking-wider text-slate-400 hover:text-white px-2 py-1 rounded transition-colors"
         >
           Fechar
         </button>
